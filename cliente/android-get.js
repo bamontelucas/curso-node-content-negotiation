@@ -1,23 +1,15 @@
 const http = require('http');
 
-const options = {
+const request = {
     hostname: 'localhost',
     port: 80,
     path: '/',
-    method: 'post',
     headers: {
-        'Accept': 'application/json',
-        // 'Content-type': 'application/x-www-form-urlencoded'
-        'Content-type': 'application/json'
+        'Accept': 'application/json'
     }
 };
 
-// const param = 'nome=José';
-const param = JSON.stringify({
-    nome: 'José'
-});
-
-let req = http.request(options, function(res) {
+http.get(request, function(res) {
 
     let chunks = [];
 
@@ -34,6 +26,3 @@ let req = http.request(options, function(res) {
         console.error(err);
     });
 });
-
-req.write(param);
-req.end();
