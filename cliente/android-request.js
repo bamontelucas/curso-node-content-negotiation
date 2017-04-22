@@ -3,14 +3,19 @@ const http = require('http');
 const options = {
     hostname: 'localhost',
     port: 80,
-    path: '/teste',
-    method: 'get',
+    path: '/',
+    method: 'post',
     headers: {
         'Accept': 'application/json',
         // 'Content-type': 'application/x-www-form-urlencoded'
         'Content-type': 'application/json'
     }
 };
+
+// const param = 'nome=José';
+const param = JSON.stringify({
+    nome: 'José'
+});
 
 let req = http.request(options, function(res) {
 
@@ -22,7 +27,7 @@ let req = http.request(options, function(res) {
     
     res.on('end', function() {
         const data = Buffer.concat(chunks).toString();
-        console.log(res.statusCode, data);
+        console.log(data);
     });
     
     res.on('error', function(err) {
@@ -30,4 +35,5 @@ let req = http.request(options, function(res) {
     });
 });
 
+req.write(param);
 req.end();

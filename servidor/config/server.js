@@ -34,5 +34,22 @@ consign()
 	.then('app/controllers')
 	.into(app);
 
+app.use(function(req, res, next) {
+	res.status(404).format({
+		html: function() {
+			res.render('errors/404')
+		}, 
+		json: function() {
+			res.send('Página não encontrada, verifique URL informada');
+		}
+	});
+	next();
+});
+
+app.use(function(err, req, res, next) {
+	res.status(500).render('errors/500', {erro: err});
+	next();
+});
+
 /* exportar o objeto app */
 module.exports = app;
